@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流年 - 生日管理与日历 (Birthday Manager)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lunar-javascript/lunar.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="logo-area">
+                <i data-lucide="calendar-heart" class="logo-icon"></i>
+                <h1>流年</h1>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-target="dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>主页 (Dashboard)</span>
+                </button>
+                <button class="nav-item" data-target="calendar-view">
+                    <i data-lucide="calendar-days"></i>
+                    <span>日历 (Calendar)</span>
+                </button>
+                <button class="nav-item" data-target="add-birthday">
+                    <i data-lucide="user-plus"></i>
+                    <span>添加 (Add)</span>
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Lunar & Gregorian<br>Birthday Tracker</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Dashboard View -->
+            <section id="dashboard" class="view-section active">
+                <header class="view-header">
+                    <h2>即将到来 (Upcoming Birthdays)</h2>
+                    <div class="current-date-display" id="current-date-display">
+                        <!-- Filled by JS -->
+                    </div>
+                </header>
+                <div class="upcoming-list" id="upcoming-list">
+                    <!-- Filled by JS -->
+                </div>
+            </section>
+
+            <!-- Calendar View -->
+            <section id="calendar-view" class="view-section hidden">
+                <header class="view-header">
+                    <h2>日历 (Calendar)</h2>
+                    <div class="calendar-controls">
+                        <button id="prev-month" class="icon-btn"><i data-lucide="chevron-left"></i></button>
+                        <h3 id="calendar-month-year">2026年 5月</h3>
+                        <button id="next-month" class="icon-btn"><i data-lucide="chevron-right"></i></button>
+                        <button id="today-btn" class="btn-secondary">今天</button>
+                    </div>
+                </header>
+                <div class="calendar-container glass-panel">
+                    <div class="calendar-weekdays">
+                        <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+                    </div>
+                    <div class="calendar-grid" id="calendar-grid">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+                <div class="calendar-details glass-panel hidden" id="calendar-details">
+                    <div class="detail-header">
+                        <h4 id="detail-date"></h4>
+                        <button id="close-details" class="icon-btn"><i data-lucide="x"></i></button>
+                    </div>
+                    <div class="detail-lunar" id="detail-lunar"></div>
+                    <div class="detail-birthdays" id="detail-birthdays"></div>
+                </div>
+            </section>
+
+            <!-- Add Birthday View -->
+            <section id="add-birthday" class="view-section hidden">
+                <header class="view-header">
+                    <h2>添加生日 (Add Birthday)</h2>
+                </header>
+                <div class="form-container glass-panel">
+                    <form id="birthday-form">
+                        <div class="form-group">
+                            <label for="b-name">姓名 (Name)</label>
+                            <input type="text" id="b-name" required placeholder="例如：张三" autocomplete="off">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>历法 (Calendar Type)</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="b-type" value="gregorian" checked>
+                                    <span class="radio-custom"></span>
+                                    公历 (Gregorian)
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="b-type" value="lunar">
+                                    <span class="radio-custom"></span>
+                                    农历 (Lunar)
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="b-year">出生年份 (Year) <span class="optional">- 可选</span></label>
+                                <input type="number" id="b-year" placeholder="YYYY" min="1900" max="2100">
+                            </div>
+                            <div class="form-group">
+                                <label for="b-month">月份 (Month)</label>
+                                <select id="b-month" required>
+                                    <!-- Filled by JS -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="b-day">日期 (Day)</label>
+                                <select id="b-day" required>
+                                    <!-- Filled by JS -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="lunar-leap-group" style="display: none;">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="b-is-leap">
+                                <span class="checkbox-custom"></span>
+                                闰月 (Leap Month)
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            <i data-lucide="save"></i> 保存生日 (Save)
+                        </button>
+                    </form>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
